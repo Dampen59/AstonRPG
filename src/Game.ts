@@ -1,10 +1,29 @@
 import { GoodGuy } from 'GoodGuy';
 import { BadGuy } from 'BadGuy';
+import { Weapon } from './Weapon';
 
 class Game {
 
     private _goodGuys :GoodGuy[];
     private _badGuys :BadGuy[];
+    private _badGuysPerGoodGuys :Number;
+
+
+    /**
+     * Getter badGuysPerGoodGuys
+     * @return {Number}
+     */
+	public get badGuysPerGoodGuys(): Number {
+		return this._badGuysPerGoodGuys;
+	}
+
+    /**
+     * Setter badGuysPerGoodGuys
+     * @param {Number} value
+     */
+	public set badGuysPerGoodGuys(value: Number) {
+		this._badGuysPerGoodGuys = value;
+	}
 
     /**
      * Getter goodGuys
@@ -38,10 +57,19 @@ class Game {
 		this._badGuys = value;
 	}
 
-    constructor(prmGoodGuys :GoodGuy[]) {
+    constructor(prmGoodGuys :GoodGuy[], prmBadGuysPerGoodGuys = 1) {
         this._goodGuys = prmGoodGuys;
         this._badGuys = new Array<BadGuy>();
-        // Create badguys
+        this._badGuysPerGoodGuys = prmBadGuysPerGoodGuys;
+        
+        for (let i = 0; i < (this._goodGuys.length * <number>this._badGuysPerGoodGuys); i++) {
+            this._badGuys.push(new BadGuy(this.randomName(), 10, 10, 10, new Weapon()))
+        }
+
     }
+
+    randomName = () => { 
+        return Math.random().toString(36).substring(7);
+    };
 
 }
