@@ -1,8 +1,10 @@
+import * as readline from 'readline';
+
 import { GoodGuy } from 'GoodGuy';
 import { BadGuy } from 'BadGuy';
 import { Weapon } from './Weapon';
 
-class Game {
+export class Game {
 
     private _goodGuys :GoodGuy[];
     private _badGuys :BadGuy[];
@@ -57,15 +59,46 @@ class Game {
 		this._badGuys = value;
 	}
 
-    constructor(prmGoodGuys :GoodGuy[], prmBadGuysPerGoodGuys = 1) {
-        this._goodGuys = prmGoodGuys;
+    constructor(prmBadGuysPerGoodGuys = 1) {
+
+        this._goodGuys = new Array<GoodGuy>();
         this._badGuys = new Array<BadGuy>();
+
+        // Création de l'équipe par l'utilisateur
+
+        const readline = require('readline');
+        const readlineInterface = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        })
+
+        readlineInterface.question("Do you want to start a game ? [y/n]", (answer :String) => {
+            switch (answer) {
+                case "n":
+                    console.log("Goodbye!");
+                    process.exit();
+                case "y":
+                    readlineInterface.question("How much Good Guys do you want ?", (answerNbGoodGuys :Number) => {
+                        if (!isNaN(<number>answerNbGoodGuys) && answerNbGoodGuys > 0) {
+                            this.setupGame(answerNbGoodGuys);
+                        } else {
+                            console.log("Wrong values were provided! Goodbye!");
+                            process.exit();
+                        }
+                    });
+                    break;
+            }
+        });   
+       
         this._badGuysPerGoodGuys = prmBadGuysPerGoodGuys;
-        
+
+    }
+
+    setupGame = (prmNbGoodGuys :Number) => {
+        this._badGuys = new Array<BadGuy>();
         for (let i = 0; i < (this._goodGuys.length * <number>this._badGuysPerGoodGuys); i++) {
             this._badGuys.push(new BadGuy(this.randomName(), 10, 10, 10, new Weapon()))
         }
-
     }
 
     randomName = () => { 
