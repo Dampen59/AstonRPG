@@ -11,6 +11,12 @@ export class Game {
     private _badGuysPerGoodGuys :Number;
     private capitalize = require('capitalize');
 
+    private readline = require('readline');
+    private readlineInterface = this.readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    })
+
 
     /**
      * Getter badGuysPerGoodGuys
@@ -65,21 +71,13 @@ export class Game {
         this._goodGuys = new Array<GoodGuy>();
         this._badGuys = new Array<BadGuy>();
 
-        // Création de l'équipe par l'utilisateur
-
-        const readline = require('readline');
-        const readlineInterface = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        })
-
-        readlineInterface.question("Do you want to start a game ? [y/n]", (answer :String) => {
+        this.readlineInterface.question("Do you want to start a game ? [y/n]", (answer :String) => {
             switch (answer) {
                 case "n":
                     console.log("Goodbye!");
                     process.exit();
                 case "y":
-                    readlineInterface.question("How much Good Guys do you want ?", (answerNbGoodGuys :Number) => {
+                    this.readlineInterface.question("How much Good Guys do you want ?", (answerNbGoodGuys :Number) => {
                         if (!isNaN(<number>answerNbGoodGuys) && answerNbGoodGuys > 0) {
                             this.setupGame(answerNbGoodGuys);
                         } else {
@@ -98,7 +96,6 @@ export class Game {
     setupGame = (prmNbGoodGuys :Number) => {
 
         for (let i = 0; i < prmNbGoodGuys; i++) {
-            console.log(`[Good Guy ${i}] Please choose a name`);
         }
 
         this._badGuys = new Array<BadGuy>();
