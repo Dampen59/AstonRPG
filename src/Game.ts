@@ -9,6 +9,7 @@ export class Game {
     private _goodGuys :GoodGuy[];
     private _badGuys :BadGuy[];
     private _badGuysPerGoodGuys :Number;
+    private capitalize = require('capitalize');
 
 
     /**
@@ -96,10 +97,8 @@ export class Game {
 
     setupGame = (prmNbGoodGuys :Number) => {
 
-
         for (let i = 0; i < prmNbGoodGuys; i++) {
-            console.log(`Good Guy ${i} settings`);
-
+            console.log(`[Good Guy ${i}] Please choose a name`);
         }
 
         this._badGuys = new Array<BadGuy>();
@@ -109,7 +108,7 @@ export class Game {
     }
 
     randomName = () => { 
-        return Math.random().toString(36).substring(7);
+        return this.capitalize(Math.random().toString(36).substring(7));
     };
 
 }
