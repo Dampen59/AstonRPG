@@ -1,5 +1,5 @@
-import { Character } from 'Character';
-import { Weapon } from 'Weapon';
+import { Character } from './Character';
+import { Weapon } from './Weapon';
 
 enum GoodGuyRole {
     ROLE_CLASSIC = 0,

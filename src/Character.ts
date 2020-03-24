@@ -1,4 +1,4 @@
-import { Weapon } from 'Weapon';
+import { Weapon } from './Weapon';
 
 export class Character {
 
@@ -96,6 +96,6 @@ export class Character {
         this._weapon = prmWeapon;
     }
 
-    
+
 
 }

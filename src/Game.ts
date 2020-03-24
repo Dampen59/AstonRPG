@@ -1,7 +1,7 @@
 import * as readline from 'readline';
 
-import { GoodGuy } from 'GoodGuy';
-import { BadGuy } from 'BadGuy';
+import { GoodGuy } from './GoodGuy';
+import { BadGuy } from './BadGuy';
 import { Weapon } from './Weapon';
 
 export class Game {
@@ -95,6 +95,13 @@ export class Game {
     }
 
     setupGame = (prmNbGoodGuys :Number) => {
+
+
+        for (let i = 0; i < prmNbGoodGuys; i++) {
+            console.log(`Good Guy ${i} settings`);
+
+        }
+
         this._badGuys = new Array<BadGuy>();
         for (let i = 0; i < (this._goodGuys.length * <number>this._badGuysPerGoodGuys); i++) {
             this._badGuys.push(new BadGuy(this.randomName(), 10, 10, 10, new Weapon()))
